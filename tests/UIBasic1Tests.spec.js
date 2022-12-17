@@ -1,4 +1,4 @@
-const {test} = require('@playwright/test');
+const {test, expect} = require('@playwright/test');
 
 /*
 1. These tests are executed in Playwright environment that launches 
@@ -14,6 +14,8 @@ chromium. firefox and webkit accordingly
 browser
 8. the other way is to use the command npx playwright test --headed
 9. test.only - executes only that test
+10. we use npx playwright show-report command to see the reports
+11. we can declare in use headless to either ture/false to run tests i.e headless:true/false in use 
 */
 
 test('first playwright test using context', async ({browser})=>
@@ -23,11 +25,15 @@ test('first playwright test using context', async ({browser})=>
     // using context we open new page
     const page = await context.newPage()
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+    console.log(await page.title());
+    await expect(page).toHaveTitle("LoginPage Practise | Rahul Shetty Academy");
 });
 
-test.only('first test case using page fixture', async ({page})=>
+test('first test case using page fixture', async ({page})=>
 {
     await page.goto('https://www.google.co.in/');
+    console.log(await page.title());
+    await expect(page).toHaveTitle("Google");
 });
 
 
