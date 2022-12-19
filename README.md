@@ -17,3 +17,65 @@ browser
 11. we can declare in use headless to either ture/false to run tests i.e headless:true/false in use 
 
 ----------------------------------------------
+12. In config we can give timeeouts seperatly for each tests, expect(assertions)
+13. its always recommended to use css for element locators
+14. to get the locator text we use textContent method
+---------------------------------------------
+
+1.css locators:
+    1. ID -> tagname#ID or #ID
+    2. classname -> tagname.classame or .classname
+    3. traversal parent to child -> parentTagname >> childTagname
+    4. using text -> text = ''
+    5. [attribute *= value] we use * for partial/contains value
+
+-----------------------------------------------
+
+ways to get pop up element locator
+1. go to dev tools -> click f8 to freeze the screen
+2. use js code setTimeout in console to freeze screen for some seconds
+3. dev tools - > elements  -> right click -> break on -> tree modification - this will 
+freeze screen if any modification happens in dom
+
+------------------------------------------------
+ locators
+1. Its recommended to use locator method getByRole('type', {name: 'locatorName'}) to locate elements (name may
+    also be a label name in case)
+2. for form fields its recommended to use getByLabel('labelName').
+3. In case role locators or form locators not available for form fields its recommended to
+ use getByPlaceholder() method
+4. for non interactive web elements its recommended to yse getByText()
+5. its not recommended to use css/xpath as dom keep changing while interacting.
+6. if the locator contains multiple elements they playwright throws error "strict mode violation"
+7. its not recommended to use first/last/nth element methods for which one locator has multiple
+elements
+
+----------------------------------------------------
+
+1. the difference between fill and type are :
+    1. Type into the field character by character, as if it was a user with a real keyboard 
+    with locator.type().
+    2. This method will emit all the necessary keyboard events, with all the keydown, keyup, 
+    keypress events in place. You can even specify the optional delay between the key 
+    presses to simulate real user behavior.
+    3. fill if we send empty string it clears the pre loaded text and other use is 
+    we can force the actionability
+    4. Most of the time, page.fill() will just work. You only need to type characters if there 
+    is special keyboard handling on the page.
+
+----------------------------------------------------
+
+Auto waiting
+1. playwright do certain actionability checks and ensure before performing any actions. if any checks fails 
+it throws time out error
+2. this checks will happen only to certain methods check auto wait in documentation
+3. for service based applications we can use "wait for load state" method and "network idle" 
+such that this will wait until all network api requests are done. we can use this in order to wait
+as all text contents method dont have auto wait 
+4. for non service based application we use "wait for navigation" method.
+    1. for waiting we use two ways here since auto wait doesnt work for all text contents we need to find other
+    alternatives
+        1. after clicking and navigating to new page use waitfornaviagtion method directly
+        2. using promise.all as shown 
+
+

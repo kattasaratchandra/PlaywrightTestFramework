@@ -1,24 +1,8 @@
 const {test, expect} = require('@playwright/test');
 
-/*
-1. These tests are executed in Playwright environment that launches 
-the browser and provides a fresh page to each test.
-2. we use async and await to perform code sequentially as js is asynchronous in nature
-3. async we use on function and await  on statements
-4. we can declare anonymous function(function which dont have names) as () => instead of using function(){} 
-5. playwright fixtures must be declared in between flower braces to recognise them as playwright fixtures
-ex {browser}, {page}
-6. In config.js if we want to run in chrome, firfox and safari we declare in use browserName as
-chromium. firefox and webkit accordingly
-7. by default playwright run tests in headless mode. config -> use -> headless:false in order to run in 
-browser
-8. the other way is to use the command npx playwright test --headed
-9. test.only - executes only that test
-10. we use npx playwright show-report command to see the reports
-11. we can declare in use headless to either ture/false to run tests i.e headless:true/false in use 
-*/
 
-test('first playwright test using context', async ({browser})=>
+
+test.only('first playwright test using context', async ({browser})=>
 {
     // newContext method is used to create new browser instance with cookies
     const context = await browser.newContext();
@@ -27,6 +11,38 @@ test('first playwright test using context', async ({browser})=>
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
     console.log(await page.title());
     await expect(page).toHaveTitle("LoginPage Practise | Rahul Shetty Academy");
+    // locators 
+    const username = page.locator("#username");
+    const signIn = page.locator("#signInBtn");
+    const cardTitles = page.locator(".card-body a");
+    await username.type("rahulshetty");
+    await page.locator("#password").type("learning");
+    await signIn.click();
+    console.log(await page.locator("[style*='block']").textContent());
+    await expect(page.locator("[style*='block']")).toHaveText("Incorrect username/password.");
+    await username.fill("");
+    await username.fill("rahulshettyacademy");
+    /*
+    for waiting we use two ways here since auto wait doesnt work for all text contents we need to find other
+    alternatives
+    1. after clicking and navigating to new page use waitfornaviagtion method directly
+    2. using promise.all as shown 
+    */
+
+    // await signIn.click();
+
+    // // console.log(await page.locator(".card-body a").first().textContent());
+    // await page.waitForNavigation();
+
+    await Promise.all([
+        page.waitForNavigation(),
+        signIn.click()
+    ]
+
+    );
+    const list = await cardTitles.allTextContents();
+    console.log(list);
+
 });
 
 test('first test case using page fixture', async ({page})=>
@@ -35,5 +51,6 @@ test('first test case using page fixture', async ({page})=>
     console.log(await page.title());
     await expect(page).toHaveTitle("Google");
 });
+
 
 

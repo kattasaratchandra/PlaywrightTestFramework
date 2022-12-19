@@ -36,7 +36,7 @@ const config = {
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
 
-    browserName : 'firefox',
+    browserName : 'chromium',
     headless: false
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     // actionTimeout: 0,
