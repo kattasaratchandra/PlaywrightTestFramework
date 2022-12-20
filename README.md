@@ -78,4 +78,21 @@ as all text contents method dont have auto wait
         1. after clicking and navigating to new page use waitfornaviagtion method directly
         2. using promise.all as shown 
 
+----------------------------------------------------
+drop downs , check/radio boxes, switch to new page/tab, attribute assertions
+
+1. we can execute single js file test by giving the path in npx playwright test command
+ex npx playwright test tests/UIBasic1Tests.spec.js
+2. select drop downs we call as static drop downs we use selectOption method and send argument 
+as value
+3. we have method check() for both radio and check boxes to check and for assertion/validations we have 
+toBeChecked(), toBeTruthy(), toBeFalsy() methods 
+4. await be used when we perform actions based on that we may have to use await inside or outside
+the expect condition
+5. we have assertion in playwright to assert attribute values using toHaveAttribute() method.
+6. using context, promises, waitforevent() method to switch to other page and sending argument 
+as "page"
+
+---------------------------------------------------------
+
 
