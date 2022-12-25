@@ -18,8 +18,7 @@ browser
 
 ----------------------------------------------
 12. In config we can give timeeouts seperatly for each tests, expect(assertions)
-13. its always recommended to use css for element locators
-14. to get the locator text we use textContent method
+13. to get the locator text we use textContent method
 ---------------------------------------------
 
 1.css locators:
@@ -49,8 +48,7 @@ freeze screen if any modification happens in dom
 6. if the locator contains multiple elements they playwright throws error "strict mode violation"
 7. its not recommended to use first/last/nth element methods for which one locator has multiple elements
 8. We can use locator.filter({ }) method to filter the list of elements either by using hasText: or has: another locator
-9. best use of filter on parent locator is we get to access child elements even if we accessed one already. we can chain and go to other child element and do actions on other child as well. we can as well do chain filter
-method
+9. best use of filter on parent locator is we get to access child elements even if we accessed one already. we can chain and go to other child element and do actions on other child as well.
 10. We can even chain filters on locator to get the specific element
 11. Getbyrole().click() method throw error "strict role violation" if mulitple elements has same role. If we use either .count() or .all() it wont throw any error
 12. We recommend prioritzing user visible locatorslike text or accessible role instead of using CSS that is tied to the implementation and could break when the page changes.
