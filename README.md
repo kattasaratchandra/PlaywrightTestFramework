@@ -47,8 +47,13 @@ freeze screen if any modification happens in dom
 4. for non interactive web elements its recommended to yse getByText()
 5. its not recommended to use css/xpath as dom keep changing while interacting.
 6. if the locator contains multiple elements they playwright throws error "strict mode violation"
-7. its not recommended to use first/last/nth element methods for which one locator has multiple
-elements
+7. its not recommended to use first/last/nth element methods for which one locator has multiple elements
+8. We can use locator.filter({ }) method to filter the list of elements either by using hasText: or has: another locator
+9. best use of filter on parent locator is we get to access child elements even if we accessed one already. we can chain and go to other child element and do actions on other child as well. we can as well do chain filter
+method
+10. We can even chain filters on locator to get the specific element
+11. Getbyrole().click() method throw error "strict role violation" if mulitple elements has same role. If we use either .count() or .all() it wont throw any error
+12. We recommend prioritzing user visible locatorslike text or accessible role instead of using CSS that is tied to the implementation and could break when the page changes.
 
 ----------------------------------------------------
 
@@ -69,10 +74,11 @@ Auto waiting
 1. playwright do certain actionability checks and ensure before performing any actions. if any checks fails 
 it throws time out error
 2. this checks will happen only to certain methods check auto wait in documentation
-3. for service based applications we can use "wait for load state" method and "network idle" 
+3. if we want to wait for particular element to load then we can use waitFor() method.
+4. for service based applications (when navigating to new website after clicking) we can use "wait for load state" method and "network idle" 
 such that this will wait until all network api requests are done. we can use this in order to wait
 as all text contents method dont have auto wait 
-4. for non service based application we use "wait for navigation" method.
+5. for non service based application we use "wait for navigation" method. (when navigating to new website after clicking) 
     1. for waiting we use two ways here since auto wait doesnt work for all text contents we need to find other
     alternatives
         1. after clicking and navigating to new page use waitfornaviagtion method directly

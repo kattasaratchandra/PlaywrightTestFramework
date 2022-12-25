@@ -90,7 +90,7 @@ test('UI actions', async ({page})=>
 1. using context, promises, waitforevent() method to switch to other page and sending argument as "page"
 */
 
-test.only("child window", async ({browser})=>{
+test("child window", async ({browser})=>{
     const context = await browser.newContext();
     const page = await context.newPage();
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
@@ -120,5 +120,64 @@ test.only("child window", async ({browser})=>{
 
 })
 
+test.only("e2e", async ({page}) => {
+    await page.goto('https://rahulshettyacademy.com/client/');
+    await page.getByPlaceholder('email@example.com').fill('katta@gmail.com');
+    await page.getByPlaceholder('enter your passsword').fill('Abc@12345');
+    await page.getByRole('button', { name: 'Login' }).click();
+    // await page.pause();
+    // using locator method and css to the entire card and filter the card with text and then clicking
+    // on add to cart button
+    await page.locator(".card-body")
+                .filter({hasText: "zara coat 3"})
+                .getByRole('button', { name: ' Add To Cart' }).click();
+    await expect(page.getByText("Product Added To Cart")).toHaveText("Product Added To Cart");
+    //   await page.getByText('zara coat 3').click();
+    //   await page.getByRole('button', { name: ' Add To Cart' }).first().click();
+    await page.getByRole('button', { name: ' Cart 1' }).click();
 
+    await expect(page.getByRole('heading', { name: 'zara coat 3' })).toHaveText("zara coat 3");
+    await page.getByRole('button', { name: 'Checkout❯' }).click();
+    await page.locator('input[type="text"]').nth(1).fill('123');
+    await page.locator('input[type="text"]').nth(2).fill('katta');
+
+    await expect(page.getByText('katta@gmail.com')).toHaveText("katta@gmail.com");
+    await page.locator('input[name="coupon"]').fill('rahulshettyacademy');
+    await page.getByRole('button', { name: 'Apply Coupon' }).click();
+
+    await expect(page.getByText('* Coupon Applied')).toContainText("Coupon Applied");
+    await page.getByPlaceholder('Select Country').click();
+    await page.getByPlaceholder('Select Country').type('indi');
+    await page.getByRole('button', { name: ' India' }).click();
+    await page.getByText('Place Order').click();
+
+    await expect(page.getByRole('heading', { name: 'Thankyou for the order.' })).toHaveText("Thankyou for the order.");
+    const orderId = await page.locator("label[class='ng-star-inserted']").textContent();
+    const orderIdArray = orderId.split(" ");
+    console.log(orderIdArray);
+    const actualorderId = orderIdArray[2];
+    console.log(actualorderId);
+    await page.getByText('Orders History Page').click();
+    await expect(page.getByRole('rowheader', { name: actualorderId })).toHaveText(actualorderId);
+    await page.locator("tr[class='ng-star-inserted']")
+                .filter({hasText: actualorderId})
+                .getByRole('button', { name: 'View' })
+                .click();
+    // await page.getByRole('button', { name: 'View' }).click();
+    await expect(page.getByText(actualorderId)).toHaveText(actualorderId);
+    await page.getByText('View Orders').click();
+    await page.locator("tr[class='ng-star-inserted']")
+    .filter({hasText: actualorderId})
+    .getByRole('button', { name: 'Delete' })
+    .click();
+
+
+    
+
+    
+
+
+
+    
+})
 
